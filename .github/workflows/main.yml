@@ -1,0 +1,36 @@
+name: Copy to Airflow Repo
+
+on:
+  push:
+    branches: ["main"]
+    paths:
+      - "**.py"
+
+jobs:
+  copy_to_airflow:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Copy file to Airflow server
+      env:
+        GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+      run: |
+        # config as github action bot
+        rm -rf .git
+        git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+        git config --global user.name "github-actions[bot]"
+
+        # clone and copy dag to airflow dag repo using token
+        git clone https://x-access-token:${{ env.GITHUB_PAT }}@github.com/insight-engineers/airflow.git /tmp/airflow
+
+        cp *.py /tmp/airflow/dags/
+        cd /tmp/airflow
+
+        # commit and push
+        git add dags/
+        git commit -m "feat: add new dag by ${{ github.actor }} with commit sha ${{ github.sha }}"
+        git pull --rebase
+        git push origin main
