@@ -26,7 +26,7 @@ jobs:
         # clone and copy dag to airflow dag repo using token
         git clone https://x-access-token:${{ env.GITHUB_PAT }}@github.com/insight-engineers/airflow.git /tmp/airflow
 
-        cp *.py /tmp/airflow/dags/
+        cp -f *.py /tmp/airflow/dags/
         cd /tmp/airflow
 
         # commit and push

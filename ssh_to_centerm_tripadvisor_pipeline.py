@@ -10,7 +10,7 @@ class NonTemplateSSHOperator(SSHOperator):
 
 with DAG(
     dag_id="ssh_to_centerm_tripadvisor_pipeline",
-    schedule="00 07 * * *",
+    schedule="0 */8 * * *",
     start_date=datetime.datetime(2024, 12, 12),
     tags=["ssh", "tripadvisor"],
 ) as dag:
