@@ -18,7 +18,7 @@ with DAG(
     scrape_and_load_to_bq = CentermSSHOperator(
         task_id="scrape_and_load_to_bq",
         ssh_conn_id="ssh.centerm.ubuntu.conn",
-        command="cd /opt/apps/insight-engineers/tripadvisor-pipeline/tripadvisor && ./bin/scrape.sh -n 200",
+        command="cd /opt/apps/insight-engineers/tripadvisor-pipeline/tripadvisor && ./bin/scrape.sh -n 0",
         cmd_timeout=None,
         conn_timeout=None,
         do_xcom_push=False,
